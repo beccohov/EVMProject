@@ -1,0 +1,43 @@
+name: Notify users based on issue labels
+
+on:
+  issues:
+      types: [labeled]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: jenschelkopf/issue-label-notification-action@1.3
+          with:
+             recipients: |
+                  help wanted=@beccohov
+                  bug=@beccohov 
+                  database=@beccohov 
+  add-comment:
+    if: github.event.label.name == 'bug'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Add comment
+        uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Hey, @beccohov, this guy found your bug! Hurry up! :sparkles: :sparkles: :sparkles: :sparkles:
+                
+          reactions : heart, hooray, laugh
+  add-commentanother:
+    if: github.event.label.name == 'help wanted'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Add comment
+        uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Hey, @beccohov, this guy really needs your help! Hurry up! :sparkles: :sparkles: :sparkles: :sparkles:
+          reactions : heart
