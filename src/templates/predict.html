@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Предсказания</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" >
+</head>
+<body>
+<form class="model_choice" action="" method="post" enctype="multipart/form-data">
+{{ form.hidden_tag() }}
+     <table style="margin-top: 150px;">
+        <tr>
+        <td>{{ form.data_file.label() }}{{ form.data_file(class="put_file") }}</td>
+            {% if form.data_file.errors %}
+               <td class="error-msg">Тут нужен .csv файл</td>
+       {% endif %}
+        </tr>
+     </table>
+    <div class="buttons_boosting">
+        <input type="submit" name="exit" value="В главное меню" class="to_main_menu">
+        {{ form.submit(class="to_main_menu") }}
+    </div>
+</form>
+</body>
+</html>

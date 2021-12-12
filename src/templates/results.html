@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Результаты работы модели</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" >
+</head>
+<body>
+{% if form.is_ok %}
+    <div class="model_choice">
+    <table class = "show_params">
+        <tr>
+            <td>Количество деревьев: {{ form.get_n_estimators() }}</td>
+        </tr>
+        <tr>
+            <td>Максимальная глубина дерева: {{ form.get_max_depth() }}</td>
+        </tr>
+        <tr>
+            <td>Размер подвыборки: {{ form.get_feature_subsample_size()*100 }} %</td>
+        </tr>
+        {% if form.model_name == 'boosting' %}
+            <tr>
+                <td>Темп обучения: {{ form.get_lr() }} </td>
+            </tr>
+        {% endif %}
+
+    </table>
+    <div class = "plots">
+        {% block content %}
+            <div class="plots_train">
+             {% include 'train_plt.html' %}
+            </div>
+            {% if form.valid_data.data %}
+                <div class="plots_val">
+                {% include 'val_plt.html' %}
+                </div>
+            {% endif %}
+        {% endblock %}
+    </div>
+    <div class="buttons_boosting">
+        <form method="POST">
+            <input type="submit" name="exit" value="Выход" class="to_main_menu">
+            <input type="submit" name="make_predictions" value="Построить прогноз" class="to_main_menu">
+        </form>
+    </div>
+
+    </div>
+    {% else %}
+    <h1 class="error_data">Целевая колонка не найдена или данные некорректны!</h1>
+        <form method="POST">
+        <input type="submit" name="exit" value="Выход" class="to_main_menu" style="width:100%;">
+        </form>
+
+{% endif %}
+<div>
+
+</div>
+
+</body>
+</html>
