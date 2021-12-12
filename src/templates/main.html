@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" >
+    <title>Обучение модели*</title>
+</head>
+
+<body>
+<div class="model_choice">
+        <div class="main_title">
+        Выберите желаемую модель
+    </div>
+    <form method="POST" class="algo_choice_form">
+    <div class = "model_name">
+        <input type="radio" name="model" value="boosting" id="boosting_model" style="opacity:0"/>
+        <label for="boosting_model" class="chosen_boosting">Градиентный бустинг</label>
+    </div>
+    <div class = "model_name">
+        <input type="radio" name="model" value="random_forest" id="random_forest_model" style="opacity:0"/>
+        <label for = "random_forest_model">Случайный лес</label>
+    </div>
+        <input type="submit" name='get_model' value="Далее" class = "next_button">
+</form>
+</div>
+
+
+
+</body>
+
+</html>

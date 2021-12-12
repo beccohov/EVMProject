@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}">
+    <title>Title</title>
+</head>
+<body>
+<div class="model_parameters_select">
+    {% if form.model_name == "boosting" %}
+    <div class="main_title">
+        Выберите параметры для бустинга и укажите нужные файлы
+    </div>
+    {% else %}
+        <div class="main_title">
+        Выберите параметры для случайного леса и укажите нужные файлы
+    </div>
+    {% endif %}
+    <form class = "boosting_params" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <table>
+            <tr>
+        <td>{{ form.n_estimators.label() }} {{ form.n_estimators(class="param_choice_input") }}</td>
+            {% if form.n_estimators.errors %}
+               <td class="error-msg">Тут нужно целое число</td>
+       {% endif %}
+        </tr>
+        <tr>
+        <td>{{ form.max_depth.label() }} {{ form.max_depth(class="param_choice_input") }}</td>
+            {% if form.max_depth.errors %}
+               <td class="error-msg">Тут нужно целое число</td>
+       {% endif %}
+        </tr>
+        <tr>
+        <td>{{ form.feature_subsample_size.label() }} {{ form.feature_subsample_size(class="param_choice_input") }}</td>
+            {% if form.feature_subsample_size.errors %}
+               <td class="error-msg">Тут нужно число</td>
+       {% endif %}
+        </tr>
+        {% if form.model_name == "boosting" %}
+        <tr>
+        <td>{{ form.lr.label() }} {{ form.lr(class="param_choice_input") }}</td>
+            {% if form.lr.errors %}
+               <td class="error-msg">Тут нужно число</td>
+       {% endif %}
+        </tr>
+    {% endif %}
+        <tr>
+        <td>{{ form.train_data.label() }} {{ form.train_data(class="train_data") }}</td>
+            {% if form.train_data.errors %}
+               <td class="error-msg">Тут нужен .csv файл</td>
+       {% endif %}
+        </tr>
+        <tr>
+        <td>{{ form.valid_data.label() }} {{ form.valid_data(class="valid_data") }}</td>
+            {% if form.valid_data.errors %}
+               <td class="error-msg">Тут нужен .csv файл</td>
+       {% endif %}
+        </tr>
+    <tr>
+        <td>{{ form.target_name.label() }} {{ form.target_name(class="param_choice_input") }}</td>
+        {% if form.target_name.errors %}
+               <td class="error-msg">Это поле не может быть пустым</td>
+       {% endif %}
+    </tr>
+        </table>
+    <div class="buttons_boosting">
+        <input type="submit" name="exit" value="Назад" class="to_main_menu">
+        {{ form.submit_data(class="next_button") }}
+    </div>
+    </form>
+
+</div>
+</body>
+</html>
